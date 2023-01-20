@@ -6,7 +6,7 @@
 
 NAME = fdf
 
-FILENAMES = main
+FILENAMES = main parse_map
 
 SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILENAMES)))
@@ -14,13 +14,18 @@ SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILENAMES)))
 OBJS_DIR = ./
 OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILENAMES)))
 
-INCLUDES_DIR = ./libft/includes/
+CFLAGS = -g3 -fsanitize=address
+
+INCLUDES_DIR = -I ./libft/includes/ -I ./includes_fdf/
 
 .c.o: ${SRCS}
-	cc -c $@ $< -I ${INCLUDES_DIR}
+	cc -c $@ $< ${INCLUDES_DIR}
 
 ${NAME}: ${OBJS}
 	cc -o fdf $^ -L. ./libft/libft.a
+
+memory:
+	cc -Werror -Wall -Wextra -g3 -fsanitize=address ${SRCS} ${INCLUDES_DIR} -L. ./libft/libft.a -o fdf
 
 libft:
 	make -C ./libft
