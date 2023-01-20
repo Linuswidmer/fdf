@@ -16,9 +16,11 @@ OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILENAMES)))
 
 INCLUDES_DIR = ./libft/includes/
 
-${NAME}: ${OBJS}
-	cc -o fdf $^ -L. lib.a
-
 .c.o: ${SRCS}
 	cc -c $@ $< -I ${INCLUDES_DIR}
-	
+
+${NAME}: ${OBJS}
+	cc -o fdf $^ -L. ./libft/libft.a
+
+libft:
+	make -C ./libft
