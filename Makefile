@@ -6,7 +6,7 @@
 
 NAME = fdf
 
-FILENAMES = main parse_map
+FILENAMES = main parse_map parse_map_utils
 
 SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILENAMES)))
