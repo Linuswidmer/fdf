@@ -8,7 +8,12 @@ int *line_to_int(char **line, int *line_len)
   i = 0;
   *line_len = 0;
   while (line[*line_len])
+  {
+    printf("%s\n", line[*line_len]);
     (*line_len)++;
+      printf("COUNT +1\n");
+  }
+  printf("LINE LENGTH = %i\n", *line_len);
   line_int = malloc(sizeof(int) * *line_len);
   if (!line_int)
     return (NULL);
@@ -20,13 +25,13 @@ int *line_to_int(char **line, int *line_len)
   return(line_int);
 }
 
-void  map_int_to_struct(point_t **map_struct, int **map_int, int num_lines, int line_len)
+void  map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int line_len)
 {
   int i;
   int j;
 
   i = 0;
-  while (i < num_lines - 1)
+  while (i < num_lines)
   {
     j = 0;
     while (j < line_len)
@@ -34,25 +39,24 @@ void  map_int_to_struct(point_t **map_struct, int **map_int, int num_lines, int 
       (map_struct[i][j]).x = (float)i;
       (map_struct[i][j]).y = (float)j;
       (map_struct[i][j]).z = (float)map_int[i][j];
+      // printf("[%i], [%i]\n", i, j);
       j++;
     }
     i++;
   }
 }
 
-point_t **map_struct_creator(int num_lines, int line_len)
+t_point **map_struct_creator(int num_lines, int line_len)
 {
-  point_t **map_struct;
-  point_t *line;
+  t_point **map_struct;
+  t_point *line;
   int i;
 
   i = 0;
   map_struct = malloc(sizeof(map_struct) * num_lines);
   if (!map_struct)
     return (NULL);
-  // printf("SIZEOF LINE %li\n", sizeof(line));
-  // sizeof line returns 8 while the real size is 12, no idea why
-  while (i < num_lines - 1)
+  while (i < num_lines)
   {
     line = malloc(12 * line_len);
     if (!line)
@@ -96,19 +100,20 @@ int **map_to_int(int fd, int **map, int *num_lines, int *line_len)
   return(map);
 }
 
-point_t **parse_map(int fd)
+t_point **parse_map(int fd, int *num_lines, int *line_len)
 {
   int **map_int;
-  point_t **map_struct;
-  int num_lines;
-  int line_len;
+  t_point **map_struct;
 
-  map_int = map_to_int(fd, 0, &num_lines, &line_len);
-  line_len--;
-  print_map_int(map_int, num_lines, line_len);
-  map_struct = map_struct_creator(num_lines, line_len);
-  map_int_to_struct(map_struct, map_int, num_lines, line_len);
-  print_map_struct(map_struct, line_len);
-  free_map_int(map_int, num_lines);
+  map_int = map_to_int(fd, 0, num_lines, line_len);
+  // (*line_len)--;
+  print_map_int(map_int, *num_lines - 1, *line_len);
+  map_struct = map_struct_creator(*num_lines - 1, *line_len);
+  map_int_to_struct(map_struct, map_int, *num_lines - 1, *line_len);
+  print_map_struct(map_struct, *line_len);
+  printf("TESST\n");
+  printf("NUMBER OF LINES%i\n", *num_lines - 1);
+  free_map_int(map_int, *num_lines - 1);
+  printf("TESST2\n");
   return (map_struct);
 }
