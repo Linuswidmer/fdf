@@ -17,7 +17,7 @@ OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILENAMES)))
 CFLAGS = -g3 -fsanitize=address
 MINILIBXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
-INCLUDES_DIR = -I ./libft/includes/ -I ./includes_fdf/
+INCLUDES_DIR = -I ./libft/includes/ -I ./includes_fdf/ -I ./mlx_linux/
 
 .c.o: ${SRCS}
 	cc -c $@ $< ${INCLUDES_DIR} -Imlx_linux -O3
@@ -26,7 +26,7 @@ ${NAME}: ${OBJS}
 	cc -o fdf $^ -L. ./libft/libft.a $(MINILIBXFLAGS)
 
 memory:
-	cc -g3 -fsanitize=address ${SRCS} ${INCLUDES_DIR} -L. ./libft/libft.a -o fdf
+	cc -g3 -fsanitize=address ${SRCS} $(MINILIBXFLAGS) ${INCLUDES_DIR} -L. ./libft/libft.a -o fdf
 
 libft:
 	make -C ./libft

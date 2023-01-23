@@ -4,7 +4,7 @@
 #include "libft.h"
 #include <fcntl.h>
 #include <stdio.h>
-#include <mlx.h>
+#include "mlx.h"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 782
@@ -39,8 +39,8 @@ t_point **map_struct_creator(int num_lines, int line_len);
 void map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int line_len);
 
 void print_map_int(int **map, int num_lines, int line_len);
-void print_map_struct(t_point **map, int line_len);
-void free_map_struct(t_point **map);
+void print_map_struct(t_point **map, int num_lines, int line_len);
+void free_map_struct(t_point **map, int num_lines);
 void  free_map_int(int **map, int num_lines);
 void free_line(char **line_split, char *line, int line_len);
 #endif

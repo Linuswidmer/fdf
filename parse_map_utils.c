@@ -5,23 +5,22 @@ void free_map_int(int **map, int num_lines)
   int i;
 
   i = 0;
-  while (i < num_lines - 3)
+  while (i < num_lines)
   {
     free(map[i]);
-    printf("test\n");
     i++;
   }
-  printf("BLA\n");
   free(map);
 }
 
-void free_map_struct(t_point **map_struct)
+void free_map_struct(t_point **map_struct, int num_lines)
 {
   int i;
 
   i = 0;
-  while (map_struct[i])
+  while (i < num_lines)
   {
+    printf("[%i] ", i);
     free(map_struct[i]);
     i++;
   }
@@ -48,7 +47,7 @@ void print_map_int(int **map, int num_lines, int line_len)
 
   i = 0;
   j = 0;
-  while(i < num_lines - 1)
+  while(i < num_lines)
   {
     while(j < line_len)
     {
@@ -61,14 +60,14 @@ void print_map_int(int **map, int num_lines, int line_len)
   }
 }
 
-void print_map_struct(t_point **map_struct, int line_len)
+void print_map_struct(t_point **map_struct, int num_lines, int line_len)
 {
   int i;
   int j;
 
   i = 0;
   j = 0;
-  while (map_struct[i])
+  while (i < num_lines)
   {
     while (j < line_len)
     {

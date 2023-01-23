@@ -26,12 +26,16 @@ t_edges *map_coordinates(t_point **map, int num_lines, int line_len)
   int j;
   t_edges *edges;
 
+  // printf("%f\n", map[i][j].x);
+  i = 0;
+  j = 0;
+  // printf("TEST\n");
   smallest_x = map[i][j].x;
   smallest_y = map[i][j].y;
   biggest_x = map[i][j].x;
   biggest_y = map[i][j].y;
-  i = 0;
-  j = 0;
+  // printf("TEST\n");
+  // write(1, "test", 4);
   while (i < num_lines)
   {
     while (j < line_len)
@@ -44,8 +48,10 @@ t_edges *map_coordinates(t_point **map, int num_lines, int line_len)
             biggest_x = map[i][j].x;
       if (map[i][j].y > biggest_y)
             biggest_y = map[i][j].y;
+      printf("[%i], [%i]", i, j);
       j++;
     }
+      printf("\n");
     j = 0;
     i++;
 
@@ -103,8 +109,8 @@ void window_size(t_point **map, t_data *img, int num_lines, int line_len)
   img->x_len = (int)(edges->top_right.x - edges->top_left.x);
   img->y_len = (int)(edges->bottom_right.y - edges->top_right.y);
 
-  printf("XLEN: %i\n", img->x_len);
-  printf("YLEN: %i\n", img->y_len);
+  // printf("XLEN: %i\n", img->x_len);
+  // printf("YLEN: %i\n", img->y_len);
 }
 
 
@@ -124,7 +130,7 @@ void scale_map(t_point **map, int num_lines, int line_len, t_data *img)
   else
       img->scale = scale_y;
 
-  printf("SCALE %i\n", img->scale);
+  // printf("SCALE %i\n", img->scale);
   i = 0;
   while (i < num_lines)
   {
@@ -146,17 +152,17 @@ void window(t_point **map, int num_lines, int line_len)
   t_data img;
   
   mlx = mlx_init();
-  window_size(map, &img, num_lines - 1, line_len);
-  scale_map(map, num_lines - 1, line_len, &img);
+  window_size(map, &img, num_lines , line_len );
+  scale_map(map, num_lines, line_len, &img);
 	mlx_win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "./fdf");
   img.img = mlx_new_image(mlx, img.x_len * img.scale + 1, img.y_len *img.scale + 1);
   img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-  print_grid(&img, map, num_lines - 1, line_len);
+  print_grid(&img, map, num_lines , line_len);
   mlx_put_image_to_window(mlx, mlx_win, img.img, (WINDOW_WIDTH - img.x_len *img.scale)/2 , (WINDOW_HEIGHT - img.y_len *img.scale)/2);
   // printf("IMAGE COORDINATES: %i %i\n", (WINDOW_WIDTH - img.x_len)/2, (WINDOW_HEIGHT - img.y_len)/2);
-  printf("TEST WINDOW\n");
+  // printf("TEST WINDOW\n");
 
-  free_map_struct(map);
+  free_map_struct(map, num_lines);
 	mlx_loop(mlx);
 
 }
@@ -170,10 +176,11 @@ int main()
   int line_len;
 
   // 1. Parse the map
-  fd = open("./test_maps/42.fdf", O_RDONLY);
+  fd = open("./test_maps/10-2.fdf", O_RDONLY);
   map = parse_map(fd, &num_lines, &line_len);
-  printf("NUMBER OF LINES: %i\n", num_lines - 1);
-  printf("LINE LENGTH: %i \n", line_len);
+  print_map_struct(map, num_lines, line_len);
+  // printf("NUMBER OF LINES: %i\n", num_lines - 1);
+  // printf("LINE LENGTH: %i \n", line_len);
 
   // 2. Convert map to isometric projection
   
