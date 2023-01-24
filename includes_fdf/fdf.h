@@ -9,6 +9,11 @@
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 782
 
+typedef struct s_vars{
+  void *mlx;
+  void *win;
+} t_vars;
+
 typedef struct	s_data {
 	void	*img;
 	char	*addr;
@@ -26,13 +31,6 @@ typedef struct s_point {
   float z;
 } t_point;
 
-typedef struct s_edges {
-  t_point top_left;
-  t_point top_right;
-  t_point bottom_left;
-  t_point bottom_right;
-} t_edges;
-
 t_point **parse_map(int fd, int *num_lines, int *line_len);
 int **map_to_int(int fd, int **map, int *num_lines, int *line_len);
 t_point **map_struct_creator(int num_lines, int line_len);
@@ -42,5 +40,15 @@ void print_map_int(int **map, int num_lines, int line_len);
 void print_map_struct(t_point **map, int num_lines, int line_len);
 void free_map_struct(t_point **map, int num_lines);
 void  free_map_int(int **map, int num_lines);
-void free_line(char **line_split, char *line, int line_len);
+void free_line(char **line_split, char *line);
+
+void map_size(t_point **map, t_data *img, int num_lines, int line_len);
+void print_grid(t_data *img, t_point **map, int num_lines, int line_len);
+void scale_map(t_point **map, int num_lines, int line_len, t_data *img);
+void window(t_point **map, int num_lines, int line_len);
+
+int close_esc(int keycode, t_vars *vars);
+int close_cross(t_vars *vars);
+
+void my_mlx_pixel_put(t_data *data, int x, int y, int color);
 #endif

@@ -7,11 +7,9 @@ int *line_to_int(char **line, int *line_len)
 
   i = 0;
   *line_len = 0;
-  while (line[*line_len])
+  while (line[*line_len] && line[*line_len][0] != '\n')
   {
-    // printf("%s\n", line[*line_len]);
     (*line_len)++;
-      // printf("COUNT +1\n");
   }
   // printf("LINE LENGTH = %i\n", *line_len);
   line_int = malloc(sizeof(int) * *line_len);
@@ -42,7 +40,7 @@ void  map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int 
       // printf("[%i],[%i] ", i, j);
       j++;
     }
-    printf("\n");
+    // printf("\n");
     i++;
   }
 }
@@ -92,7 +90,7 @@ int **map_to_int(int fd, int **map, int *num_lines, int *line_len)
     map_tmp[i] = line_to_int(line_split, line_len);
     map_tmp[i + 1] = NULL;
     free(map);
-    free_line(line_split, line, *line_len);
+    free_line(line_split, line);
     map = map_tmp;
     (*num_lines)++;
   }
@@ -106,7 +104,6 @@ t_point **parse_map(int fd, int *num_lines, int *line_len)
   t_point **map_struct;
 
   map_int = map_to_int(fd, 0, num_lines, line_len);
-  (*line_len)--;
   (*num_lines)--;
   printf("LINE LENGTH %i\n", *line_len);
   printf("NUMBER OF LINE%i\n", *num_lines);

@@ -20,24 +20,24 @@ void free_map_struct(t_point **map_struct, int num_lines)
   i = 0;
   while (i < num_lines)
   {
-    printf("[%i] ", i);
+    // printf("[%i] ", i);
     free(map_struct[i]);
     i++;
   }
   free(map_struct);
 }
 
-void free_line(char **line_split, char *line, int line_len)
+void free_line(char **line_split, char *line)
 {
   int i;
 
   i = 0;
-  free(line);
-  while (i < line_len)
+  while (line_split[i])
   {
     free (line_split[i]);
     i++;
   }
+  free(line);
   free(line_split);
 }
 void print_map_int(int **map, int num_lines, int line_len)

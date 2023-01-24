@@ -41,7 +41,11 @@ int close(int keycode, t_vars *vars)
   {
     // printf("%p\n", vars->mlx);
     mlx_loop_end(vars->mlx);
+  // mlx_destroy_window(vars->mlx, vars->win);
+  // mlx_destroy_display(vars->mlx);
+    exit(1);
     // printf("%p\n", vars->mlx);
+    //
     // ptr = NULL;
   }
   return (0);
@@ -58,20 +62,22 @@ int	main(void)
 {
   t_vars vars;
   t_data img;
-  // int ptr;
+  int ptr;
 
+  ptr = malloc(2);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 400, 400, "Hello world!");
 	img.img = mlx_new_image(vars.mlx, 120, 120);
   img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
   my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-  mlx_destroy_image(vars.mlx, &img);
+  // mlx_destroy_image(vars.mlx, &img);
   mlx_put_image_to_window(vars.mlx, vars.win, img.img, 10, 10);
   mlx_hook(vars.win, 2, 1L<<0, close, &vars);
   mlx_hook(vars.win, 17, 1L<<2, cross, &vars);
 	mlx_loop(vars.mlx);
   // mlx_destroy_image(vars.mlx, &img);
   mlx_destroy_window(vars.mlx, vars.win);
+  mlx_destroy_display(vars.mlx);
   printf("exited the loop\n");
-  // ptr = malloc(2);
+  ptr = malloc(2);
 }
