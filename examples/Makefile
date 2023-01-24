@@ -1,6 +1,6 @@
 #Makefile to comile a test program with the minilibx library
 
-OBJ = write_pixels.o
+OBJ = key_handling.o
 NAME = test
 
 
