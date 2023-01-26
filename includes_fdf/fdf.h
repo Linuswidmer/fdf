@@ -14,7 +14,7 @@ typedef struct s_vars{
   void *win;
 } t_vars;
 
-typedef struct	s_data {
+typedef struct	s_data_img {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -23,7 +23,23 @@ typedef struct	s_data {
   int x_len;
   int y_len;
   int scale;
-}				t_data;
+}				t_data_img;
+
+ typedef struct s_data_line {
+  int x;
+  int y;
+  int x2;
+  int y2;
+  int w;
+  int h;
+  int dx1;
+  int dy1;
+  int dx2;
+  int dy2;
+  int longest;
+  int shortest;
+  int numerator;
+} t_data_line;
 
 typedef struct s_point {
   float x;
@@ -42,13 +58,17 @@ void free_map_struct(t_point **map, int num_lines);
 void  free_map_int(int **map, int num_lines);
 void free_line(char **line_split, char *line);
 
-void map_size(t_point **map, t_data *img, int num_lines, int line_len);
-void print_grid(t_data *img, t_point **map, int num_lines, int line_len);
-void scale_map(t_point **map, int num_lines, int line_len, t_data *img);
+void map_size(t_point **map, t_data_img *img, int num_lines, int line_len);
+void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len);
+void scale_map(t_point **map, int num_lines, int line_len, t_data_img *img);
 void window(t_point **map, int num_lines, int line_len);
 
 int close_esc(int keycode, t_vars *vars);
 int close_cross(t_vars *vars);
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
+// void draw_line(t_data_img *img, int x, int y, int x2, int y2);
+void print_map(t_data_img *img, t_point **map, int num_lines, int line_len);
+void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len);
+
 #endif

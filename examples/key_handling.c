@@ -62,9 +62,8 @@ int	main(void)
 {
   t_vars vars;
   t_data img;
-  int ptr;
+  // int ptr;
 
-  ptr = malloc(2);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 400, 400, "Hello world!");
 	img.img = mlx_new_image(vars.mlx, 120, 120);
@@ -79,5 +78,5 @@ int	main(void)
   mlx_destroy_window(vars.mlx, vars.win);
   mlx_destroy_display(vars.mlx);
   printf("exited the loop\n");
-  ptr = malloc(2);
+  // ptr = malloc(2);
 }

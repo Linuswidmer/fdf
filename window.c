@@ -1,7 +1,6 @@
 #include "fdf.h"
 
-
-void map_size(t_point **map, t_data *img, int num_lines, int line_len)
+void map_size(t_point **map, t_data_img *img, int num_lines, int line_len)
 {
   float smallest_x;
   float smallest_y;
@@ -36,25 +35,7 @@ void map_size(t_point **map, t_data *img, int num_lines, int line_len)
   img->y_len = (int)(biggest_y - smallest_y);
 }
 
-void print_grid(t_data *img, t_point **map, int num_lines, int line_len)
-{
-  int i;
-  int j;
-
-  i = 0;
-  while (i < num_lines)
-  {
-    j = 0;
-    while (j < line_len)
-    {
-      my_mlx_pixel_put(img, (int)map[i][j].x, (int)map[i][j].y, 0xFFFFFFFF);
-      j++;
-    }
-    i++;
-  }
-}
-
-void scale_map(t_point **map, int num_lines, int line_len, t_data *img)
+void scale_map(t_point **map, int num_lines, int line_len, t_data_img *img)
 {
   int scale_x;
   int scale_y;
@@ -85,7 +66,7 @@ void scale_map(t_point **map, int num_lines, int line_len, t_data *img)
 void window(t_point **map, int num_lines, int line_len)
 {
   t_vars vars;
-  t_data img;
+  t_data_img img;
   
   vars.mlx = mlx_init();
   map_size(map, &img, num_lines , line_len);
@@ -95,7 +76,7 @@ void window(t_point **map, int num_lines, int line_len)
   
   img.img = mlx_new_image(vars.mlx, img.x_len * img.scale + 1, img.y_len *img.scale + 1);
   img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-  print_grid(&img, map, num_lines , line_len);
+  print_map(&img, map, num_lines , line_len);
   mlx_put_image_to_window(vars.mlx, vars.win, img.img, (WINDOW_WIDTH - img.x_len *img.scale)/2 , (WINDOW_HEIGHT - img.y_len *img.scale)/2);
   // printf("IMAGE COORDINATES: %i %i\n", (WINDOW_WIDTH - img.x_len)/2, (WINDOW_HEIGHT - img.y_len)/2);
   // printf("TEST WINDOW\n");

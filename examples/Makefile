@@ -1,7 +1,7 @@
 #Makefile to comile a test program with the minilibx library
 
-SRCS = key_handling.c
-OBJ = key_handling.o
+SRCS = draw_line.c
+OBJ = draw_line.o
 NAME = test
 
 

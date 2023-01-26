@@ -1,4 +1,43 @@
-#include "fdf.h"
+#include <mlx.h>
+#include <stdio.h>
+#include <unistd.h>
+
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
+typedef struct s_point {
+  float x;
+  float y;
+}       t_point;
+
+typedef struct s_data_line {
+  int x;
+  int y;
+  int x2;
+  int y2;
+  int w;
+  int h;
+  int dx1;
+  int dy1;
+  int dx2;
+  int dy2;
+  int longest;
+  int shortest;
+  int numerator;
+} t_data_line;
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
 
 int abs(int x)
 {
@@ -8,22 +47,14 @@ int abs(int x)
     return (x);
 }
 
-void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-void line_to_img(t_data_img *img, t_data_line* line)
+void line_to_img(t_data *img, t_data_line* line)
 {
   int i;
 
   i = 0;
   while (i <= line->longest)
   {
-    my_mlx_pixel_put(img, line->x, line->y, 0xFFFFFFFF);
+    my_mlx_pixel_put(img, line->x, line->y, 0x00FF0000);
     line->numerator += line->shortest;
     if (!(line->numerator < line->longest))
     {
@@ -79,25 +110,7 @@ void calc_line_params(t_data_line *line)
   line->numerator = line->longest >> 1;
 }
 
-void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len)
-{
-  int i;
-  int j;
-
-  i = 0;
-  while (i < num_lines)
-  {
-    j = 0;
-    while (j < line_len)
-    {
-      my_mlx_pixel_put(img, (int)map[i][j].x, (int)map[i][j].y, 0xFFFFFFFF);
-      j++;
-    }
-    i++;
-  }
-}
-
-void draw_line(t_data_img *img, int x, int y, int x2, int y2)
+void draw_line(t_data *img, int x, int y, int x2, int y2)
 {
   t_data_line line;
 
@@ -109,24 +122,34 @@ void draw_line(t_data_img *img, int x, int y, int x2, int y2)
   line_to_img(img, &line);
 }
 
-void print_map(t_data_img *img, t_point **map, int num_lines, int line_len)
+int main()
 {
-  int i;
-  int j;
+	void	*mlx;
+  void  *mlx_win;
+  t_data  img;
+  t_point p1;
+  t_point p2;
 
-  i = 0;
-  while (i < num_lines)
-  {
-    j = 0;
-    while (j < line_len)
-    {
-      if (i < num_lines - 1)
-        draw_line(img, (int)map[i][j].x, (int)map[i][j].y, (int)map[i + 1][j].x, (int)map[i + 1][j].y);
-      if (j < line_len - 1)
-        draw_line(img, (int)map[i][j].x, (int)map[i][j].y, (int)map[i ][j +1].x, (int)map[i][j + 1].y);
-      j++;
-    }
-    i++;
-  }
+  p1.x = 10;
+  p1.y = 10;
+  p2.x = 100;
+  p2.y = 20;
+
+	mlx = mlx_init();
+  mlx_win = mlx_new_window(mlx, 720, 720, "Hello world!");
+	img.img = mlx_new_image(mlx, 420, 420);
+  img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+  // my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+  
+  // line(&img, p1.x, p1.y, p2.x, p2.y);
+  draw_line(&img, 10, 10, 100, 100);
+  draw_line(&img, 250, 100, 150, 10);
+  draw_line(&img, 10, 320, 100, 10);
+  draw_line(&img, 300, 120, 100, 10);
+  draw_line(&img, 400, 400, 400, 400);
+  // line(&img, 10, 10, 100, 100);
+  printf("TTT\n");
+  mlx_put_image_to_window(mlx, mlx_win, img.img, 1, 1);
+  mlx_loop(mlx);
+
 }
-
