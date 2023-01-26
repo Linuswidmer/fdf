@@ -71,7 +71,7 @@ void print_map_struct(t_point **map_struct, int num_lines, int line_len)
   {
     while (j < line_len)
     {
-      printf("[%i], [%i], [%i]   ", (int)(map_struct[i][j]).x, (int)(map_struct[i][j]).y, (int)(map_struct[i][j]).z);
+      printf("[%2f], [%2f], [%2f]   ", (map_struct[i][j]).x, (map_struct[i][j]).y, (map_struct[i][j]).z);
       j++;
     }
     printf("\n");

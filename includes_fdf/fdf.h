@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include "mlx.h"
+#include <math.h>
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 782
@@ -20,9 +21,11 @@ typedef struct	s_data_img {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-  int x_len;
-  int y_len;
-  int scale;
+  float x_len;
+  float y_len;
+  float scale;
+  float smallest_x;
+  float smallest_y;
 }				t_data_img;
 
  typedef struct s_data_line {

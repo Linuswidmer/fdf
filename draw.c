@@ -71,7 +71,7 @@ void calc_line_params(t_data_line *line)
     line->longest = abs(line->h);
     line->shortest = abs(line->w);
     if (line->h < 0)
-      line->dy2 = -1;
+      line->dy2 = -1; 
     else
       line->dy2 = 1;
     line->dx2 = 0;
