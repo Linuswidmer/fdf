@@ -101,12 +101,16 @@ void draw_line(t_data_img *img, int x, int y, int x2, int y2)
 {
   t_data_line line;
 
-  line.x = x;
-  line.y = y;
-  line.x2 = x2;
-  line.y2 = y2;
-  calc_line_params(&line);
-  line_to_img(img, &line);
+  if (0 < x < img->x_len * img->scale && 0 < x2 < img->x_len * img->scale && \
+    0 < y < img->y_len * img->scale && 0 < y2 < img->y_len * img->scale)
+  {
+    line.x = x;
+    line.y = y;
+    line.x2 = x2;
+    line.y2 = y2;
+    calc_line_params(&line);
+    line_to_img(img, &line);
+  }
 }
 
 void print_map(t_data_img *img, t_point **map, int num_lines, int line_len)

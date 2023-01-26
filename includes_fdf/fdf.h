@@ -10,11 +10,6 @@
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 782
 
-typedef struct s_vars{
-  void *mlx;
-  void *win;
-} t_vars;
-
 typedef struct	s_data_img {
 	void	*img;
 	char	*addr;
@@ -27,6 +22,21 @@ typedef struct	s_data_img {
   float smallest_x;
   float smallest_y;
 }				t_data_img;
+
+typedef struct s_point {
+  float x;
+  float y;
+  float z;
+} t_point;
+
+typedef struct s_vars{
+  void *mlx;
+  void *win;
+  t_data_img *img;
+  t_point **map;
+  int num_lines;
+  int line_len;
+} t_vars;
 
  typedef struct s_data_line {
   int x;
@@ -44,11 +54,6 @@ typedef struct	s_data_img {
   int numerator;
 } t_data_line;
 
-typedef struct s_point {
-  float x;
-  float y;
-  float z;
-} t_point;
 
 t_point **parse_map(int fd, int *num_lines, int *line_len);
 int **map_to_int(int fd, int **map, int *num_lines, int *line_len);
@@ -62,8 +67,8 @@ void  free_map_int(int **map, int num_lines);
 void free_line(char **line_split, char *line);
 
 void map_size(t_point **map, t_data_img *img, int num_lines, int line_len);
-void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len);
 void scale_map(t_point **map, int num_lines, int line_len, t_data_img *img);
+int center_map(t_point **map, int num_lines, int line_len, t_data_img *img);
 void window(t_point **map, int num_lines, int line_len);
 
 int close_esc(int keycode, t_vars *vars);
@@ -73,5 +78,9 @@ void my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 // void draw_line(t_data_img *img, int x, int y, int x2, int y2);
 void print_map(t_data_img *img, t_point **map, int num_lines, int line_len);
 void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len);
+
+void rotation_x(t_point **map, int num_lines, int line_len);
+void rotation_y(t_point **map, int num_lines, int line_len);
+void rotation_z(t_point **map, int num_lines, int line_len);
 
 #endif
