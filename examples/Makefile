@@ -1,7 +1,7 @@
 #Makefile to comile a test program with the minilibx library
 
-SRCS = draw_line.c
-OBJ = draw_line.o
+SRCS = image_update.c
+OBJ = image_update.o
 NAME = test
 
 

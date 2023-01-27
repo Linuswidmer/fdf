@@ -41,28 +41,32 @@ void map_size(t_point **map, t_data_img *img, int num_lines, int line_len)
   printf("IMG Y_LEN: %f\n", img->y_len);
 }
 
-void scale_map(t_point **map, int num_lines, int line_len, t_data_img *img)
+float compute_map_scale(t_data_img *img)
 {
-  int scale_x;
-  int scale_y;
+  float scale_x;
+  float scale_y;
+  
+  scale_x = (WINDOW_WIDTH - 100)/img->x_len;
+  scale_y = (WINDOW_HEIGHT - 100)/img->y_len;
+  if (scale_x < scale_y)
+      return (scale_x);
+  else
+      return (scale_y);
+}
+
+void scale_map(t_point **map, int num_lines, int line_len, float scale)
+{
   int i;
   int j;
 
-  scale_x = (WINDOW_WIDTH - 100)/img->x_len;
-  scale_y = (WINDOW_HEIGHT - 100)/img->y_len;
-
-  if (scale_x < scale_y)
-      img->scale = scale_x;
-  else
-      img->scale = scale_y;
-  i = 0;
   while (i < num_lines)
   {
     j = 0;
     while (j < line_len)
     {
-      map[i][j].x = map[i][j].x * (float)img->scale;
-      map[i][j].y = map[i][j].y * (float)img->scale;
+      map[i][j].x = map[i][j].x * scale;
+      map[i][j].y = map[i][j].y * scale;
+      map[i][j].z = map[i][j].z * scale;
       j++;
     }
     i++;
@@ -81,7 +85,7 @@ int center_map(t_point **map, int num_lines, int line_len, t_data_img *img)
     {
       if (img->smallest_x < 0)
         map[i][j].x =  map[i][j].x - img->smallest_x;
-      if (img->smallest_y < 1)
+      if (img->smallest_y < 0)
         map[i][j].y = map[i][j].y + (img->smallest_y * -1); 
       j++;
     }

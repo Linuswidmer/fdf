@@ -32,8 +32,10 @@ typedef struct s_point {
 typedef struct s_vars{
   void *mlx;
   void *win;
-  t_data_img *img;
+  t_data_img img;
   t_point **map;
+  float img_xlen;
+  float img_ylen;
   int num_lines;
   int line_len;
 } t_vars;
@@ -67,15 +69,19 @@ void  free_map_int(int **map, int num_lines);
 void free_line(char **line_split, char *line);
 
 void map_size(t_point **map, t_data_img *img, int num_lines, int line_len);
-void scale_map(t_point **map, int num_lines, int line_len, t_data_img *img);
+void scale_map(t_point **map, int num_lines, int line_len, float scale);
 int center_map(t_point **map, int num_lines, int line_len, t_data_img *img);
 void window(t_point **map, int num_lines, int line_len);
+float compute_map_scale(t_data_img *img);
 
+int keypress_events(int keycode, t_vars *vars);
 int close_esc(int keycode, t_vars *vars);
 int close_cross(t_vars *vars);
+void rotate(t_vars *vars);
+void zoom(t_vars *vars);
 
 void my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
-// void draw_line(t_data_img *img, int x, int y, int x2, int y2);
+void draw_line(t_data_img *img, int x, int y, int x2, int y2);
 void print_map(t_data_img *img, t_point **map, int num_lines, int line_len);
 void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len);
 
