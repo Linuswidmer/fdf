@@ -36,7 +36,7 @@ void  map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int 
     {
       (map_struct[i][j]).x = (float)i;
       (map_struct[i][j]).y = (float)j;
-      (map_struct[i][j]).z = (float)map_int[i][j];
+      (map_struct[i][j]).z =  - (float)map_int[i][j];
       // printf("[%i],[%i] ", i, j);
       j++;
     }

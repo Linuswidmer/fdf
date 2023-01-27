@@ -72,21 +72,21 @@ void map_size(t_point **map, t_data_img *img, int num_lines, int line_len);
 void scale_map(t_point **map, int num_lines, int line_len, float scale);
 int center_map(t_point **map, int num_lines, int line_len, t_data_img *img);
 void window(t_point **map, int num_lines, int line_len);
-float compute_map_scale(t_data_img *img);
+float compute_map_scale(t_vars *vars);
 
 int keypress_events(int keycode, t_vars *vars);
 int close_esc(int keycode, t_vars *vars);
 int close_cross(t_vars *vars);
 void rotate(t_vars *vars);
-void zoom(t_vars *vars);
+void zoom(t_vars *vars, float zoom);
 
 void my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 void draw_line(t_data_img *img, int x, int y, int x2, int y2);
 void print_map(t_data_img *img, t_point **map, int num_lines, int line_len);
 void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len);
 
-void rotation_x(t_point **map, int num_lines, int line_len);
-void rotation_y(t_point **map, int num_lines, int line_len);
-void rotation_z(t_point **map, int num_lines, int line_len);
+void rotation_x(t_point **map, int num_lines, int line_len, double rad);
+void rotation_y(t_point **map, int num_lines, int line_len, double rad);
+void rotation_z(t_point **map, int num_lines, int line_len, double rad);
 
 #endif

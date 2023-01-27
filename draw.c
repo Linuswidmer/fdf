@@ -8,12 +8,15 @@ int abs(int x)
     return (x);
 }
 
-void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+  if (0 < x < img->x_len * img->scale && 0 < y < img->y_len * img->scale)
+  {
+	  dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	  *(unsigned int*)dst = color;
+  }
 }
 
 void line_to_img(t_data_img *img, t_data_line* line)
@@ -101,16 +104,12 @@ void draw_line(t_data_img *img, int x, int y, int x2, int y2)
 {
   t_data_line line;
 
-  // if (0 < x < img->x_len * img->scale && 0 < x2 < img->x_len * img->scale && \
-  //   0 < y < img->y_len * img->scale && 0 < y2 < img->y_len * img->scale)
-  // {
     line.x = x;
     line.y = y;
     line.x2 = x2;
     line.y2 = y2;
     calc_line_params(&line);
     line_to_img(img, &line);
-  // }
 }
 
 void print_map(t_data_img *img, t_point **map, int num_lines, int line_len)

@@ -35,23 +35,48 @@ void map_size(t_point **map, t_data_img *img, int num_lines, int line_len)
   img->y_len = biggest_y - smallest_y;
   img->smallest_x = smallest_x;
   img->smallest_y = smallest_y;
+  img->x_len = biggest_x - smallest_x;
+  img->y_len = biggest_y - smallest_y;
   printf("SMALLLEST X %f\n", smallest_x);
   printf("SMALLLEST Y %f\n", smallest_y);
   printf("IMG X_LEN: %f\n", img->x_len);
   printf("IMG Y_LEN: %f\n", img->y_len);
+  
+  // scale_x = (WINDOW_WIDTH - 100)/img->x_len;
+  // scale_y = (WINDOW_HEIGHT - 100)/img->y_len;
+  // if (scale_x < scale_y)
+  // {
+  //     vars->img_xlen = vars->img.x_len * scale_x + 1;
+  //     vars->img_ylen = vars->img.y_len * scale_y + 1;
+  //     return (scale_x);
+  // }
+//   else
+//   {
+//       vars->img_xlen = vars->img.x_len * scale_x + 1;
+//       vars->img_ylen = vars->img.y_len * scale_y + 1;
+//       return (scale_y);
+//   }
 }
 
-float compute_map_scale(t_data_img *img)
+float compute_map_scale(t_vars *vars)
 {
   float scale_x;
   float scale_y;
   
-  scale_x = (WINDOW_WIDTH - 100)/img->x_len;
-  scale_y = (WINDOW_HEIGHT - 100)/img->y_len;
+  scale_x = (WINDOW_WIDTH - 100)/vars->img.x_len;
+  scale_y = (WINDOW_HEIGHT - 100)/vars->img.y_len;
   if (scale_x < scale_y)
+  {
+      vars->img_xlen = vars->img.x_len * scale_x + 1;
+      vars->img_ylen = vars->img.y_len * scale_y + 1;
       return (scale_x);
+  }
   else
+  {
+      vars->img_xlen = vars->img.x_len * scale_x + 1;
+      vars->img_ylen = vars->img.y_len * scale_y + 1;
       return (scale_y);
+  }
 }
 
 void scale_map(t_point **map, int num_lines, int line_len, float scale)
@@ -73,6 +98,31 @@ void scale_map(t_point **map, int num_lines, int line_len, float scale)
   }
 }
 
+// int center_map( t_point **map, int num_lines, int line_len, t_data_img img)
+// {
+//   int i;
+//   int j;
+//
+//   printf("SCALAR %f\n", img.scale);
+//   printf("CENTER X AND Y: %f, %f\n", img.smallest_x, img.smallest_y);
+//   // print_map_struct(map, num_lines, line_len);
+//   while (i < num_lines)
+//   {
+//     j = 0;
+//     while (j < line_len)
+//     {
+//       // printf("test");
+//       if (img.smallest_x < 0)
+//         map[i][j].x =  map[i][j].x - (img.smallest_x * img.scale);
+//       if (img.smallest_y < 0)
+//         map[i][j].y = map[i][j].y - (img.smallest_y * img.scale); 
+//       j++;
+//     }
+  //   i++;
+  // }
+  // return (0);
+ // }
+
 int center_map(t_point **map, int num_lines, int line_len, t_data_img *img)
 {
   int i;
@@ -93,4 +143,3 @@ int center_map(t_point **map, int num_lines, int line_len, t_data_img *img)
   }
   return (0);
 }
-

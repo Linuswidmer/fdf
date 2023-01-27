@@ -32,11 +32,14 @@ int keypress_events(int keycode, t_vars *vars)
   if (keycode == 97)
     // mlx_loop_end(vars->mlx);
   // d
-  if (keycode == 100)
+  if (keycode == 113)
     rotate(vars);
   // zoom (z)
   if (keycode == 122)
-    zoom(vars);
+    zoom(vars, 0.5);
+  // zoom out (x)
+  if (keycode == 120)
+    zoom(vars, 2);
     // img_update(vars);
   return (0);
 }
