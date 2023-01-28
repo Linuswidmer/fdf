@@ -17,7 +17,6 @@ void	my_mlx_pixel_put(t_data_img *img, int x, int y, int color)
 	  dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	  *(unsigned int*)dst = color;
   }
-  // if (x > 0 &&  x < img->x_len * img->scale && y > 0 && y < img->y_len * img->scale)
 }
 
 void line_to_img(t_data_img *img, t_data_line* line)
@@ -42,11 +41,6 @@ void line_to_img(t_data_img *img, t_data_line* line)
     }
     i++;
   }
-  // printf("W is %i\nH is %i\n", w, h);
-  // printf("X is: %i\nX1 is %i\ndx1 is %i\ndx2 is %i\n", x, dx1, dx2);
-  // printf("Y is: %i\nY1 is %i\ndy1 is %i\ndy2 is %i\n", y, dy1, dy2);
-  // printf("Longest is %i\nShortest %i\n", longest, shortest);
-  // printf("NUMERATOR IS %i\n", numerator);
 }
 
 void calc_line_params(t_data_line *line)
@@ -81,24 +75,6 @@ void calc_line_params(t_data_line *line)
     line->dx2 = 0;
   }
   line->numerator = line->longest >> 1;
-}
-
-void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len)
-{
-  int i;
-  int j;
-
-  i = 0;
-  while (i < num_lines)
-  {
-    j = 0;
-    while (j < line_len)
-    {
-      my_mlx_pixel_put(img, (int)map[i][j].x, (int)map[i][j].y, 0xFFFFFFFF);
-      j++;
-    }
-    i++;
-  }
 }
 
 void draw_line(t_data_img *img, int x, int y, int x2, int y2)

@@ -40,6 +40,21 @@ typedef struct s_vars{
   int line_len;
 } t_vars;
 
+typedef struct s_data_line{
+  int x;
+  int y;
+  int x2;
+  int y2;
+  int w;
+  int h;
+  int dx1;
+  int dx2;
+  int dy1;
+  int dy2;
+  int longest;
+  int shortest;
+  int numerator;
+} t_data_line;
 
 t_point **parse_map(int fd, int *num_lines, int *line_len);
 int **map_to_int(int fd, int **map, int *num_lines, int *line_len);
@@ -71,8 +86,6 @@ int zoom(t_vars *vars, float zoom);
 void my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 void draw_line(t_data_img *img, int x, int y, int x2, int y2);
 void print_map(t_data_img *img, t_point **map, int num_lines, int line_len);
-void print_grid(t_data_img *img, t_point **map, int num_lines, int line_len);
-
 void rotation_x(t_point **map, int num_lines, int line_len, double rad);
 void rotation_y(t_point **map, int num_lines, int line_len, double rad);
 void rotation_z(t_point **map, int num_lines, int line_len, double rad);
