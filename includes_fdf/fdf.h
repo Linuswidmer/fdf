@@ -71,6 +71,7 @@ void free_line(char **line_split, char *line);
 void map_size(t_point **map, t_data_img *img, int num_lines, int line_len);
 void scale_map(t_point **map, int num_lines, int line_len, float scale);
 int center_map(t_point **map, int num_lines, int line_len, t_data_img *img);
+int center_map2(t_point **map, int num_lines, int line_len, t_data_img *img);
 void window(t_point **map, int num_lines, int line_len);
 float compute_map_scale(t_vars *vars);
 

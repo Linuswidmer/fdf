@@ -26,7 +26,7 @@ int zoom(t_vars *vars, float zoom)
     {
       return (0);
     }
-    blank_img(vars);
+    // blank_img(vars);
     vars->img_width = vars->img_width * zoom;
     vars->img_height = vars->img_height * zoom;
     img_new.scale = vars->img.scale * zoom;

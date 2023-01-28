@@ -1,15 +1,38 @@
 #include "fdf.h"
 
+void translate_map(t_vars *vars, float trans_x, float trans_y)
+{
+  int i;
+  int j;
+
+  i = 0;
+  while (i < vars->num_lines)
+  {
+    j = 0;
+    while (j < vars->line_len)
+    {
+        (vars->map)[i][j].x = (vars->map)[i][j].x + trans_x; 
+        (vars->map)[i][j].y = (vars->map)[i][j].y + trans_y; 
+      j++;
+    }
+    i++;
+  }
+}
+
 t_data_img img_creator(t_vars *vars)
 {
   t_data_img img;
 
   map_size(vars->map, &img, vars->num_lines, vars->line_len);
-  center_map(vars->map, vars->num_lines, vars->line_len, &img);
   vars->img = img; 
   img.scale = compute_map_scale(vars);
+  translate_map(vars, -img.smallest_x, -img.smallest_y);
+  // center_map(vars->map, vars->num_lines, vars->line_len, &img);
   scale_map(vars->map, vars->num_lines, vars->line_len, img.scale);
-  img.img = mlx_new_image(vars->mlx, vars->img_width, vars->img_height);
+  translate_map(vars, (WINDOW_WIDTH - (img.x_len * img.scale))/2, (WINDOW_HEIGHT - (img.y_len * img.scale))/2);
+  // center_map2(vars->map, vars->num_lines, vars->line_len, &img);
+  img.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+  // img.img = mlx_new_image(vars->mlx, vars->img_width, vars->img_height);
   img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
   vars->img = img; 
   return (img);
@@ -37,13 +60,12 @@ void window(t_point **map, int num_lines, int line_len)
   // rotation_y(map, num_lines, line_len, 3.14);
   // print_map_struct(map, num_lines, line_len);
   vars.img = img_creator(&vars);
-  printf("MLX ADDRESS WINDOW %p\n", vars.mlx);
-  
   printf("SCALAR %f\n", vars.img.scale);
   printf("IMG DIMENSIONS: %f, %f\n", vars.img_width, vars.img_height);
   
   print_map(&(vars.img), map, num_lines , line_len);
-  mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, (WINDOW_WIDTH - vars.img_width)/2 , (WINDOW_HEIGHT - vars.img_height)/2);
+  mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
+  // mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, (WINDOW_WIDTH - vars.img_width)/2 , (WINDOW_HEIGHT - vars.img_height)/2);
  
   // hooks should happen late, because all info need to be stored in vars
   mlx_hook(vars.win, 2, 1L<<0, keypress_events, &vars);
