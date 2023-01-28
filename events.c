@@ -52,7 +52,7 @@ void event_rotate(t_vars *vars, double rad_x, double rad_y, double rad_z)
   vars->img = img_new;
 }
 
-void translate_y(t_vars *vars, int trans)
+void event_translate(t_vars *vars, int trans_x, int trans_y)
 {
   t_data_img img_new;
   
@@ -62,24 +62,10 @@ void translate_y(t_vars *vars, int trans)
   img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
   img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
   
-  translate_map(vars, 0, trans);
-  print_map(&img_new, vars->map, vars->num_lines, vars->line_len);
-  mlx_destroy_image(vars->mlx, vars->img.img);
-  mlx_put_image_to_window(vars->mlx, vars->win, img_new.img, (WINDOW_WIDTH - vars->img_width)/2 , (WINDOW_HEIGHT - vars->img_height)/2);
-  vars->img = img_new;
-}
-
-void translate_x(t_vars *vars, int trans)
-{
-  t_data_img img_new;
-  
-  img_new.x_len = vars->img.x_len;
-  img_new.y_len = vars->img.y_len;
-  img_new.scale = vars->img.scale;
-  img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-  img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
-  
-  translate_map(vars, trans, 0);
+  if (trans_x)
+    translate_map(vars, trans_x, 0);
+  if (trans_y)
+    translate_map(vars, 0, trans_y);
   print_map(&img_new, vars->map, vars->num_lines, vars->line_len);
   mlx_destroy_image(vars->mlx, vars->img.img);
   mlx_put_image_to_window(vars->mlx, vars->win, img_new.img, (WINDOW_WIDTH - vars->img_width)/2 , (WINDOW_HEIGHT - vars->img_height)/2);
@@ -99,13 +85,13 @@ int keypress_events(int keycode, t_vars *vars)
   else if (keycode == 65307) //esc
     mlx_loop_end(vars->mlx);
   else if (keycode == 119) //w
-    translate_y(vars, trans);
+    event_translate(vars, 0, trans);
   else if (keycode == 115) //s
-    translate_y(vars, -trans);
+    event_translate(vars, 0, -trans);
   else if(keycode == 97)
-    translate_x(vars, trans);
+    event_translate(vars, trans, 0);
   else if(keycode == 100)
-    translate_x(vars, -trans);
+    event_translate(vars, -trans, 0);
   else if(keycode == 121)
     event_rotate(vars, 0.0628, 0, 0);
   else if(keycode == 117)
