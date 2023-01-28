@@ -67,14 +67,14 @@ float compute_map_scale(t_vars *vars)
   scale_y = (WINDOW_HEIGHT - 100)/vars->img.y_len;
   if (scale_x < scale_y)
   {
-      vars->img_xlen = vars->img.x_len * scale_x + 1;
-      vars->img_ylen = vars->img.y_len * scale_y + 1;
+      vars->img_width = vars->img.x_len * scale_x + 1;
+      vars->img_height = vars->img.y_len * scale_y + 1;
       return (scale_x);
   }
   else
   {
-      vars->img_xlen = vars->img.x_len * scale_x + 1;
-      vars->img_ylen = vars->img.y_len * scale_y + 1;
+      vars->img_width = vars->img.x_len * scale_x + 1;
+      vars->img_height = vars->img.y_len * scale_y + 1;
       return (scale_y);
   }
 }
@@ -84,6 +84,7 @@ void scale_map(t_point **map, int num_lines, int line_len, float scale)
   int i;
   int j;
 
+  i = 0;
   while (i < num_lines)
   {
     j = 0;
@@ -128,6 +129,7 @@ int center_map(t_point **map, int num_lines, int line_len, t_data_img *img)
   int i;
   int j;
 
+  i = 0;
   while (i < num_lines)
   {
     j = 0;

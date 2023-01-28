@@ -34,8 +34,8 @@ typedef struct s_vars{
   void *win;
   t_data_img img;
   t_point **map;
-  float img_xlen;
-  float img_ylen;
+  float img_width;
+  float img_height;
   int num_lines;
   int line_len;
 } t_vars;
