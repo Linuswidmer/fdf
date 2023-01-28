@@ -39,3 +39,40 @@ void translate_map(t_vars *vars, float trans_x, float trans_y)
     i++;
   }
 }
+
+void map_size(t_vars *vars, t_point **map, t_data_img *img)
+{
+  float biggest_x;
+  float biggest_y;
+  int i;
+  int j;
+
+  i = 0;
+  img->smallest_x = 0;
+  img->smallest_y = 0;
+  biggest_x = 0;
+  biggest_y = 0;
+  while (i < vars->num_lines)
+  {
+    j = 0;
+    while (j < vars->line_len)
+    {
+      if (map[i][j].x < img->smallest_x)
+            img->smallest_x = map[i][j].x;
+      if (map[i][j].y < img->smallest_y)
+            img->smallest_y = map[i][j].y;
+      if (map[i][j].x > biggest_x)
+            biggest_x = map[i][j].x;
+      if (map[i][j].y > biggest_y)
+            biggest_y = map[i][j].y;
+      j++;
+    }
+    i++;
+  }
+  img->x_len = biggest_x - img->smallest_x;
+  img->y_len = biggest_y - img->smallest_y;
+  if (img->x_len < img->y_len)
+      img->scale = WINDOW_WIDTH/img->x_len;
+  else
+      img->scale = WINDOW_HEIGHT/img->y_len;
+}

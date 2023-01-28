@@ -37,10 +37,8 @@ void  map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int 
       (map_struct[i][j]).x = (float)i;
       (map_struct[i][j]).y = (float)j;
       (map_struct[i][j]).z =  - (float)map_int[i][j];
-      // printf("[%i],[%i] ", i, j);
       j++;
     }
-    // printf("\n");
     i++;
   }
 }
@@ -96,21 +94,4 @@ int **map_to_int(int fd, int **map, int *num_lines, int *line_len)
   }
   *num_lines = *num_lines - 1;
   return(map);
-}
-
-t_point **parse_map(int fd, int *num_lines, int *line_len)
-{
-  int **map_int;
-  t_point **map_struct;
-
-  map_int = map_to_int(fd, 0, num_lines, line_len);
-  (*num_lines)--;
-  printf("LINE LENGTH %i\n", *line_len);
-  printf("NUMBER OF LINE%i\n", *num_lines);
-  // print_map_int(map_int, *num_lines, *line_len);
-  map_struct = map_struct_creator(*num_lines, *line_len);
-  map_int_to_struct(map_struct, map_int, *num_lines, *line_len);
-  free_map_int(map_int, *num_lines);
-  // print_map_struct(map_struct, *num_lines, *line_len);
-  return (map_struct);
 }

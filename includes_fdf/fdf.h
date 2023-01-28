@@ -40,27 +40,13 @@ typedef struct s_vars{
   int line_len;
 } t_vars;
 
- typedef struct s_data_line {
-  int x;
-  int y;
-  int x2;
-  int y2;
-  int w;
-  int h;
-  int dx1;
-  int dy1;
-  int dx2;
-  int dy2;
-  int longest;
-  int shortest;
-  int numerator;
-} t_data_line;
-
 
 t_point **parse_map(int fd, int *num_lines, int *line_len);
 int **map_to_int(int fd, int **map, int *num_lines, int *line_len);
 t_point **map_struct_creator(int num_lines, int line_len);
 void map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int line_len);
+int *line_to_int(char **line, int *line_len);
+
 
 void print_map_int(int **map, int num_lines, int line_len);
 void print_map_struct(t_point **map, int num_lines, int line_len);
@@ -68,11 +54,14 @@ void free_map_struct(t_point **map, int num_lines);
 void  free_map_int(int **map, int num_lines);
 void free_line(char **line_split, char *line);
 
-void map_size(t_point **map, t_data_img *img, int num_lines, int line_len);
+void map_size(t_vars *vars, t_point **map, t_data_img *img);
 void scale_map(t_point **map, int num_lines, int line_len, float scale);
 void translate_map(t_vars *vars, float trans_x, float trans_y);
+
 void window(t_point **map, int num_lines, int line_len);
-float compute_map_scale(t_vars *vars);
+t_vars mlx_creator(t_point **map, int num_lines, int line_len);
+t_data_img img_creator(t_vars *vars);
+
 
 int keypress_events(int keycode, t_vars *vars);
 int close_cross(t_vars *vars);

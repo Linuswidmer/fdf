@@ -10,22 +10,18 @@ int zoom(t_vars *vars, float zoom)
 {
   t_data_img img_new;
 
-    img_new.x_len = vars->img.x_len;
-    img_new.y_len = vars->img.y_len;
-    img_new.scale = vars->img.scale;
     img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
     img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
 
     scale_map(vars->map, vars->num_lines, vars->line_len, zoom);
     // translate_map(vars, (WINDOW_WIDTH - (img_new.x_len * img_new.scale))/2, (WINDOW_HEIGHT - (img_new.y_len * img_new.scale))/2);
     printf("SCALAR %f\n", vars->img.scale);
-    printf("IMG DIMENSIONS: %f, %f\n", vars->img_width, vars->img_height);
     printf("IMG XLEN: %f\n", vars->img.x_len);
     printf("IMG YLEN: %f\n", vars->img.y_len);
 
     print_map(&img_new, vars->map, vars->num_lines, vars->line_len);
     mlx_destroy_image(vars->mlx, vars->img.img);
-    mlx_put_image_to_window(vars->mlx, vars->win, img_new.img, (WINDOW_WIDTH - vars->img_width)/2 , (WINDOW_HEIGHT - vars->img_height)/2);
+    mlx_put_image_to_window(vars->mlx, vars->win, img_new.img, 0, 0);
     vars->img = img_new;
   return (0);
 }
@@ -34,9 +30,6 @@ void event_rotate(t_vars *vars, double rad_x, double rad_y, double rad_z)
 {
   t_data_img img_new;
   
-  img_new.x_len = vars->img.x_len;
-  img_new.y_len = vars->img.y_len;
-  img_new.scale = vars->img.scale;
   img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
   img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
   
@@ -48,7 +41,7 @@ void event_rotate(t_vars *vars, double rad_x, double rad_y, double rad_z)
     rotation_z(vars->map, vars->num_lines, vars->line_len, rad_z);
   print_map(&img_new, vars->map, vars->num_lines, vars->line_len);
   mlx_destroy_image(vars->mlx, vars->img.img);
-  mlx_put_image_to_window(vars->mlx, vars->win, img_new.img, (WINDOW_WIDTH - vars->img_width)/2 , (WINDOW_HEIGHT - vars->img_height)/2);
+  mlx_put_image_to_window(vars->mlx, vars->win, img_new.img, 0,0);
   vars->img = img_new;
 }
 
@@ -56,9 +49,6 @@ void event_translate(t_vars *vars, int trans_x, int trans_y)
 {
   t_data_img img_new;
   
-  img_new.x_len = vars->img.x_len;
-  img_new.y_len = vars->img.y_len;
-  img_new.scale = vars->img.scale;
   img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
   img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
   
@@ -68,7 +58,7 @@ void event_translate(t_vars *vars, int trans_x, int trans_y)
     translate_map(vars, 0, trans_y);
   print_map(&img_new, vars->map, vars->num_lines, vars->line_len);
   mlx_destroy_image(vars->mlx, vars->img.img);
-  mlx_put_image_to_window(vars->mlx, vars->win, img_new.img, (WINDOW_WIDTH - vars->img_width)/2 , (WINDOW_HEIGHT - vars->img_height)/2);
+  mlx_put_image_to_window(vars->mlx, vars->win, img_new.img,0,0);
   vars->img = img_new;
 }
 
