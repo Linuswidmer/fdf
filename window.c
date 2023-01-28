@@ -1,23 +1,5 @@
 #include "fdf.h"
 
-void translate_map(t_vars *vars, float trans_x, float trans_y)
-{
-  int i;
-  int j;
-
-  i = 0;
-  while (i < vars->num_lines)
-  {
-    j = 0;
-    while (j < vars->line_len)
-    {
-        (vars->map)[i][j].x = (vars->map)[i][j].x + trans_x; 
-        (vars->map)[i][j].y = (vars->map)[i][j].y + trans_y; 
-      j++;
-    }
-    i++;
-  }
-}
 
 t_data_img img_creator(t_vars *vars)
 {
@@ -27,12 +9,9 @@ t_data_img img_creator(t_vars *vars)
   vars->img = img; 
   img.scale = compute_map_scale(vars);
   translate_map(vars, -img.smallest_x, -img.smallest_y);
-  // center_map(vars->map, vars->num_lines, vars->line_len, &img);
   scale_map(vars->map, vars->num_lines, vars->line_len, img.scale);
   translate_map(vars, (WINDOW_WIDTH - (img.x_len * img.scale))/2, (WINDOW_HEIGHT - (img.y_len * img.scale))/2);
-  // center_map2(vars->map, vars->num_lines, vars->line_len, &img);
   img.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-  // img.img = mlx_new_image(vars->mlx, vars->img_width, vars->img_height);
   img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
   vars->img = img; 
   return (img);
