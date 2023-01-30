@@ -5,7 +5,8 @@ t_data_img img_creator(t_vars *vars)
 {
   t_data_img img;
 
-  map_size(vars, vars->map, &img);
+  //map_size(vars, vars->map, &img);
+  calc_map_params(vars, &img);
   translate_map(vars, -img.smallest_x, -img.smallest_y);
   scale_map(vars->map, vars->num_lines, vars->line_len, img.scale);
   translate_map(vars, (WINDOW_WIDTH - (img.x_len * img.scale))/2, (WINDOW_HEIGHT - (img.y_len * img.scale))/2);

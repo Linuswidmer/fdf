@@ -21,6 +21,8 @@ typedef struct	s_data_img {
   float scale;
   float smallest_x;
   float smallest_y;
+  float biggest_x;
+  float biggest_y;
 }				t_data_img;
 
 typedef struct s_point {
@@ -70,6 +72,7 @@ void  free_map_int(int **map, int num_lines);
 void free_line(char **line_split, char *line);
 
 void map_size(t_vars *vars, t_point **map, t_data_img *img);
+void calc_map_params(t_vars *vars, t_data_img *img);
 void scale_map(t_point **map, int num_lines, int line_len, float scale);
 void translate_map(t_vars *vars, float trans_x, float trans_y);
 
