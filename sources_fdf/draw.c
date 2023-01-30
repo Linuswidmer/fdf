@@ -48,6 +48,9 @@ void calc_line_params(t_data_line *line)
   line->w = line->x2 - line->x;
   line->h = line->y2 - line->y;
   line->dy2 = 0; //has to be set
+  line->dx1 = 0;
+  line->dx2 = 0;
+  line->dy1 = 0;
   if (line->w < 0)
   {
     line->dx1 = -1;

@@ -23,15 +23,18 @@ ${NAME}: ${OBJS}
 	cc -o fdf $^ -L. ./libft/libft.a $(MINILIBXFLAGS)
 
 .c.o: ${SRCS}
-	cc -c -o $@ $< ${INCLUDES_DIR} -Imlx_linux -O3
+	cc ${CFLAGS} -c -o $@ $< ${INCLUDES_DIR} -Imlx_linux -O3
 
-all: ${NAME} clean
+all: lib ${NAME} clean
+
+lib:
+	make -C ./libft/
 
 clean:
 	rm -rf ${OBJS}
 
 fclean: clean
-	rm -f ./fdf
+	rm -f ${NAME}
 
 re: fclean all
 
@@ -39,6 +42,3 @@ re: fclean all
 
 memory:
 	cc -g3 -fsanitize=address -Werror -Wall -Wextra ${SRCS} $(MINILIBXFLAGS) ${INCLUDES_DIR} -L. ./libft/libft.a -o fdf
-
-libft:
-	make -C ./libft

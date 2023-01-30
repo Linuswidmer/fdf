@@ -22,15 +22,20 @@ void window(t_point **map, int num_lines, int line_len)
   t_vars vars;
   
   vars = mlx_creator(map, num_lines, line_len);
-  vars.img = img_creator(&vars);
-  printf("SCALAR %f\n", vars.img.scale);
-  print_map(&(vars.img), map, num_lines , line_len);
-  mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
-  mlx_hook(vars.win, 2, 1L<<0, keypress_events, &vars);
-  mlx_hook(vars.win, 17, 1L<<2, close_cross, &vars);
-	mlx_loop(vars.mlx);
-  mlx_destroy_image(vars.mlx, vars.img.img);
-  mlx_destroy_window(vars.mlx, vars.win);
+  if (vars.win)
+  {
+    vars.img = img_creator(&vars);
+    if (vars.img.img)
+    {
+      print_map(&(vars.img), map, num_lines , line_len);
+      mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
+      mlx_hook(vars.win, 2, 1L<<0, keypress_events, &vars);
+      mlx_hook(vars.win, 17, 1L<<2, close_cross, &vars);
+	    mlx_loop(vars.mlx);
+      mlx_destroy_image(vars.mlx, vars.img.img);
+    }
+    mlx_destroy_window(vars.mlx, vars.win);
+  }
   free(vars.mlx);
 }
 
