@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:05:14 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 10:13:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/30 13:01:27 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ t_point	**parse_map(int fd, int *num_lines, int *line_len)
 	int		**map_int;
 	t_point	**map_struct;
 
+	*num_lines = 2;
 	map_int = map_to_int(fd, 0, num_lines, line_len);
-	(*num_lines)--;
+	(*num_lines) = *(num_lines) - 2;
 	map_struct = map_struct_creator(*num_lines, *line_len);
-	map_int_to_struct(map_struct, map_int, *num_lines, *line_len);
+	map_i_to_s(map_struct, map_int, *num_lines, *line_len);
 	free_map_int(map_int, *num_lines);
 	return (map_struct);
 }

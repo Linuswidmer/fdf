@@ -6,19 +6,11 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 11:35:05 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 11:44:23 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/30 12:58:31 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	abs(int x)
-{
-	if (x < 0)
-		return (-x);
-	else
-		return (x);
-}
 
 void	my_mlx_pixel_put(t_data_img *img, int x, int y, int color)
 {
@@ -58,22 +50,6 @@ void	line_to_img(t_data_img *img, t_data_line *line)
 
 void	calc_line_params(t_data_line *line)
 {
-	line->w = line->x2 - line->x;
-	line->h = line->y2 - line->y;
-	line->dy2 = 0;
-	line->dx1 = 0;
-	line->dx2 = 0;
-	line->dy1 = 0;
-	if (line->w < 0)
-	{
-		line->dx1 = -1;
-		line->dx2 = -1;
-	}
-	else if (line->w > 0)
-	{
-		line->dx1 = 1;
-		line->dx2 = 1;
-	}
 	if (line->h < 0)
 		line->dy1 = -1;
 	else if (line->h > 0)
@@ -93,39 +69,49 @@ void	calc_line_params(t_data_line *line)
 	line->numerator = line->longest >> 1;
 }
 
-void	draw_line(t_data_img *img, int x, int y, int x2, int y2)
+void	draw_line(t_data_img *img, t_point p1, t_point p2)
 {
 	t_data_line	line;
 
-	line.x = x;
-	line.y = y;
-	line.x2 = x2;
-	line.y2 = y2;
+	line.x = p1.x;
+	line.y = p1.y;
+	line.x2 = p2.x;
+	line.y2 = p2.y;
+	line.dy2 = 0;
+	line.dx1 = 0;
+	line.dx2 = 0;
+	line.dy1 = 0;
+	line.w = line.x2 - line.x;
+	line.h = line.y2 - line.y;
+	if (line.w < 0)
+	{
+		line.dx1 = -1;
+		line.dx2 = -1;
+	}
+	else if (line.w > 0)
+	{
+		line.dx1 = 1;
+		line.dx2 = 1;
+	}
 	calc_line_params(&line);
 	line_to_img(img, &line);
 }
 
-void	print_map(t_data_img *img, t_point **map, int num_lines, int line_len)
+void	print_map(t_data_img *img, t_point **map, int nl, int ll)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < num_lines)
+	while (i < nl)
 	{
 		j = 0;
-		while (j < line_len)
+		while (j < ll)
 		{
-			if (i < num_lines - 1)
-			{
-				draw_line(img, (int)map[i][j].x, (int)map[i][j].y, \
-					(int)map[i + 1][j].x, (int)map[i + 1][j].y);
-			}
-			if (j < line_len - 1)
-			{
-				draw_line(img, (int)map[i][j].x, (int)map[i][j].y, \
-					(int)map[i][j + 1].x, (int)map[i][j + 1].y);
-			}
+			if (i < nl - 1)
+				draw_line(img, map[i][j], map[i + 1][j]);
+			if (j < ll - 1)
+				draw_line(img, map[i][j], map[i][j + 1]);
 			j++;
 		}
 		i++;

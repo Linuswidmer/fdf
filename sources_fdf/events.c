@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:57:00 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 11:07:26 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/30 12:17:43 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ int	close_cross(t_vars *vars)
 	return (0);
 }
 
-int	zoom(t_vars *vars, float zoom)
+int	zoom(t_vars *vars, int keycode)
 {
 	t_data_img	img_new;
+	float		zoom;
 
+	if (keycode == 120)
+		zoom = 2;
+	else
+		zoom = 0.5;
 	img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (img_new.img)
 	{
@@ -80,10 +85,8 @@ void	event_translate(t_vars *vars, int trans_x, int trans_y)
 
 int	keypress_events(int keycode, t_vars *vars)
 {
-	if (keycode == 122)
-		zoom(vars, 0.5);
-	else if (keycode == 120)
-		zoom(vars, 2);
+	if (keycode == 122 || keycode == 120)
+		zoom(vars, keycode);
 	else if (keycode == 65307)
 		mlx_loop_end(vars->mlx);
 	else if (keycode == 119)

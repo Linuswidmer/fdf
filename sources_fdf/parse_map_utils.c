@@ -6,11 +6,19 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 11:16:48 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 11:20:51 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/30 15:39:55 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+float	abs_f(float x)
+{
+	if (x < 0)
+		return (-x);
+	else
+		return (x);
+}
 
 void	free_map_int(int **map, int num_lines)
 {
@@ -38,7 +46,7 @@ void	free_map_struct(t_point **map_struct, int num_lines)
 	free(map_struct);
 }
 
-void	free_line(char **line_split, char *line)
+int	**free_line(char **line_split, char *line, int **map, int **map_t)
 {
 	int	i;
 
@@ -50,24 +58,6 @@ void	free_line(char **line_split, char *line)
 	}
 	free(line);
 	free(line_split);
-}
-
-void	print_map_int(int **map, int num_lines, int line_len)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < num_lines)
-	{
-		while (j < line_len)
-		{
-			ft_printf("%i", map[i][j]);
-			j++;
-		}
-		j = 0;
-		ft_printf("\n");
-		i++;
-	}
+	free(map);
+	return (map_t);
 }

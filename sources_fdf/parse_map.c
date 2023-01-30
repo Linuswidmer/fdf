@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 11:08:40 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 11:15:10 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/30 15:01:57 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ int	*line_to_int(char **line, int *line_len)
 	return (line_int);
 }
 
-void	map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int line_len)
+void	map_i_to_s(t_point **map_struct, int **map_int, int nl, int ll)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < num_lines)
+	while (i < nl)
 	{
 		j = 0;
-		while (j < line_len)
+		while (j < ll)
 		{
 			(map_struct[i][j]).x = (float)i;
 			(map_struct[i][j]).y = (float)j;
@@ -82,8 +82,8 @@ int	**map_to_int(int fd, int **map, int *num_lines, int *line_len)
 	int		**map_tmp;
 	int		i;
 
-	*num_lines = 2;
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		i = 0;
 		map_tmp = malloc(sizeof(map_tmp) * *num_lines);
@@ -97,11 +97,9 @@ int	**map_to_int(int fd, int **map, int *num_lines, int *line_len)
 		line_split = ft_split(line, ' ');
 		map_tmp[i] = line_to_int(line_split, line_len);
 		map_tmp[i + 1] = NULL;
-		free(map);
-		free_line(line_split, line);
-		map = map_tmp;
+		map = free_line(line_split, line, map, map_tmp);
 		(*num_lines)++;
+		line = get_next_line(fd);
 	}
-	*num_lines = *num_lines - 1;
 	return (map);
 }

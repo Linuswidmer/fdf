@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 11:46:59 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 11:56:27 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/30 15:05:46 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <math.h>
 
 # define WINDOW_WIDTH 1024
-# define WINDOW_HEIGHT 782
+# define WINDOW_HEIGHT 600
 
 typedef struct s_data_img {
 	void	*img;
@@ -72,13 +72,13 @@ typedef struct s_data_line{
 t_point		**parse_map(int fd, int *num_lines, int *line_len);
 int			**map_to_int(int fd, int **map, int *num_lines, int *line_len);
 t_point		**map_struct_creator(int num_lines, int line_len);
-void		map_int_to_struct(t_point **map_struct, int **map_int, int num_lines, int line_len);
 int			*line_to_int(char **line, int *line_len);
+void		map_i_to_s(t_point **map_struct, int **map_int, int nl, int ll);
 
-void		print_map_int(int **map, int num_lines, int line_len);
 void		free_map_struct(t_point **map, int num_lines);
 void		free_map_int(int **map, int num_lines);
-void		free_line(char **line_split, char *line);
+int			**free_line(char **line_split, char *line, int **map, int **map_t);
+float			abs_f(float x);
 
 void		map_size(t_vars *vars, t_point **map, t_data_img *img);
 void		calc_map_params(t_vars *vars, t_data_img *img);
@@ -91,12 +91,9 @@ t_data_img	img_creator(t_vars *vars);
 
 int			keypress_events(int keycode, t_vars *vars);
 int			close_cross(t_vars *vars);
-void		rotate(t_vars *vars);
-int			zoom(t_vars *vars, float zoom);
 
 void		my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
-void		draw_line(t_data_img *img, int x, int y, int x2, int y2);
-void		print_map(t_data_img *img, t_point **map, int num_lines, int line_len);
+void		print_map(t_data_img *img, t_point **map, int nl, int ll);
 void		rotation_x(t_point **map, int num_lines, int line_len, double rad);
 void		rotation_y(t_point **map, int num_lines, int line_len, double rad);
 void		rotation_z(t_point **map, int num_lines, int line_len, double rad);

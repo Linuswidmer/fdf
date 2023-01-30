@@ -29,6 +29,12 @@ all: lib ${NAME} clean
 
 lib:
 	make -C ./libft/
+	
+mlx:
+	wget https://projects.intra.42.fr/uploads/document/document/13502/minilibx-linux.tgz
+	tar -xvzf minilibx-linux.tgz
+	mv minilibx-linux mlx_linux
+	rm minilibx-linux.tgz
 
 clean:
 	rm -rf ${OBJS}
