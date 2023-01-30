@@ -12,7 +12,6 @@ int zoom(t_vars *vars, float zoom)
 
     img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
     img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
-
     scale_map(vars->map, vars->num_lines, vars->line_len, zoom);
     // translate_map(vars, (WINDOW_WIDTH - (img_new.x_len * img_new.scale))/2, (WINDOW_HEIGHT - (img_new.y_len * img_new.scale))/2);
     printf("SCALAR %f\n", vars->img.scale);
@@ -32,7 +31,6 @@ void event_rotate(t_vars *vars, double rad_x, double rad_y, double rad_z)
   
   img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
   img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
-  
   if(rad_x)
     rotation_x(vars->map, vars->num_lines, vars->line_len, rad_x);
   if(rad_y)
@@ -51,7 +49,6 @@ void event_translate(t_vars *vars, int trans_x, int trans_y)
   
   img_new.img = mlx_new_image(vars->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
   img_new.addr = mlx_get_data_addr(img_new.img, &img_new.bits_per_pixel, &img_new.line_length, &img_new.endian);
-  
   if (trans_x)
     translate_map(vars, trans_x, 0);
   if (trans_y)

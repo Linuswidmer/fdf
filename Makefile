@@ -8,22 +8,34 @@ NAME = fdf
 
 FILENAMES = main parse_map parse_map_utils window events draw rotation map
 
-SRCS_DIR = ./
+SRCS_DIR = ./sources_fdf/
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILENAMES)))
 
-OBJS_DIR = ./
+OBJS_DIR = ./sources_fdf/
 OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILENAMES)))
 
-CFLAGS = -g3 -fsanitize=address -Werror -Wall -Wextra
+CFLAGS = -Werror -Wall -Wextra
 MINILIBXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 INCLUDES_DIR = -I ./libft/includes/ -I ./includes_fdf/ -I ./mlx_linux/
 
-.c.o: ${SRCS}
-	cc -c $@ $< ${INCLUDES_DIR} -Imlx_linux -O3
-
 ${NAME}: ${OBJS}
 	cc -o fdf $^ -L. ./libft/libft.a $(MINILIBXFLAGS)
+
+.c.o: ${SRCS}
+	cc -c -o $@ $< ${INCLUDES_DIR} -Imlx_linux -O3
+
+all: ${NAME} clean
+
+clean:
+	rm -rf ${OBJS}
+
+fclean: clean
+	rm -f ./fdf
+
+re: fclean all
+
+.PHONY: all clean fclean re
 
 memory:
 	cc -g3 -fsanitize=address -Werror -Wall -Wextra ${SRCS} $(MINILIBXFLAGS) ${INCLUDES_DIR} -L. ./libft/libft.a -o fdf
