@@ -78,6 +78,9 @@ void	map_size(t_vars *vars, t_point **map, t_data_img *img)
 
 void	calc_map_params(t_vars *vars, t_data_img *img)
 {
+	float scale_x;
+	float scale_y;
+	
 	img->smallest_x = 0;
 	img->smallest_y = 0;
 	img->biggest_x = 0;
@@ -85,8 +88,10 @@ void	calc_map_params(t_vars *vars, t_data_img *img)
 	map_size(vars, vars->map, img);
 	img->x_len = abs_f(img->biggest_x) + abs_f(img->smallest_x);
 	img->y_len = abs_f(img->biggest_y) + abs_f(img->smallest_y);
-	if (img->x_len > img->y_len)
-		img->scale = WINDOW_WIDTH / (img->x_len + 1);
+	scale_x =  WINDOW_WIDTH / (img->x_len + 1);
+	scale_y = WINDOW_HEIGHT / (img->y_len + 1);
+	if (scale_x < scale_y)
+		img->scale = scale_x;
 	else
-		img->scale = WINDOW_HEIGHT / (img->y_len + 1);
+		img->scale = scale_y;
 }

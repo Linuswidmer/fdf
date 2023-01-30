@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:57:00 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 12:17:43 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/30 16:38:45 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ void	event_translate(t_vars *vars, int trans_x, int trans_y)
 	}
 }
 
+int auto_motion(t_vars *vars)
+{
+	while (1)
+	{
+		event_rotate(vars, 0, 0.0001, -0.0001);
+	}
+	return (0);
+}
+
 int	keypress_events(int keycode, t_vars *vars)
 {
 	if (keycode == 122 || keycode == 120)
@@ -109,5 +118,7 @@ int	keypress_events(int keycode, t_vars *vars)
 		event_rotate(vars, 0, 0, 0.0628);
 	else if (keycode == 109)
 		event_rotate(vars, 0, 0, -0.0628);
+	else if (keycode == 112)
+		auto_motion(vars);
 	return (0);
 }

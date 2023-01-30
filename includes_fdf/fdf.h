@@ -21,6 +21,10 @@
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 600
 
+# ifndef PROJECTION
+#  define PROJECTION 1
+# endif
+
 typedef struct s_data_img {
 	void	*img;
 	char	*addr;
@@ -91,6 +95,7 @@ t_data_img	img_creator(t_vars *vars);
 
 int			keypress_events(int keycode, t_vars *vars);
 int			close_cross(t_vars *vars);
+int		auto_motion(t_vars *vars);
 
 void		my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 void		print_map(t_data_img *img, t_point **map, int nl, int ll);
