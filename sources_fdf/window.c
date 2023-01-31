@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 11:29:55 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 15:43:22 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/31 09:12:01 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ t_vars	mlx_creator(t_point **map, int num_lines, int line_len)
 
 	vars.mlx = mlx_init();
 	vars.map = map;
+	vars.rotation_x = 0.955;
+	vars.rotation_z = 0.785;
+	vars.rotation_y = 0;
 	vars.num_lines = num_lines;
 	vars.line_len = line_len;
 	if (vars.mlx)

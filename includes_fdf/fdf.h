@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 11:46:59 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 15:05:46 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/31 10:20:18 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 600
-
-# ifndef PROJECTION
-#  define PROJECTION 1
-# endif
 
 typedef struct s_data_img {
 	void	*img;
@@ -55,6 +51,9 @@ typedef struct s_vars{
 	float		img_height;
 	int			num_lines;
 	int			line_len;
+	float		rotation_x;
+	float		rotation_y;
+	float		rotation_z;
 }				t_vars;
 
 typedef struct s_data_line{
@@ -82,7 +81,7 @@ void		map_i_to_s(t_point **map_struct, int **map_int, int nl, int ll);
 void		free_map_struct(t_point **map, int num_lines);
 void		free_map_int(int **map, int num_lines);
 int			**free_line(char **line_split, char *line, int **map, int **map_t);
-float			abs_f(float x);
+float		abs_f(float x);
 
 void		map_size(t_vars *vars, t_point **map, t_data_img *img);
 void		calc_map_params(t_vars *vars, t_data_img *img);
@@ -95,12 +94,18 @@ t_data_img	img_creator(t_vars *vars);
 
 int			keypress_events(int keycode, t_vars *vars);
 int			close_cross(t_vars *vars);
-int		auto_motion(t_vars *vars);
+int			auto_motion(t_vars *vars);
 
 void		my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 void		print_map(t_data_img *img, t_point **map, int nl, int ll);
 void		rotation_x(t_point **map, int num_lines, int line_len, double rad);
 void		rotation_y(t_point **map, int num_lines, int line_len, double rad);
 void		rotation_z(t_point **map, int num_lines, int line_len, double rad);
+
+void		event_rotate(t_vars *vars, double r_x, double r_y, double r_z);
+
+int			close_cross(t_vars *vars);
+int			auto_motion(t_vars *vars);
+void		two_d(t_vars *vars);
 
 #endif

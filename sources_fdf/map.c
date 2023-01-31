@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:41:45 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 10:55:47 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/31 10:22:21 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ void	map_size(t_vars *vars, t_point **map, t_data_img *img)
 
 void	calc_map_params(t_vars *vars, t_data_img *img)
 {
-	float scale_x;
-	float scale_y;
-	
+	float	scale_x;
+	float	scale_y;
+
 	img->smallest_x = 0;
 	img->smallest_y = 0;
 	img->biggest_x = 0;
@@ -88,7 +88,7 @@ void	calc_map_params(t_vars *vars, t_data_img *img)
 	map_size(vars, vars->map, img);
 	img->x_len = abs_f(img->biggest_x) + abs_f(img->smallest_x);
 	img->y_len = abs_f(img->biggest_y) + abs_f(img->smallest_y);
-	scale_x =  WINDOW_WIDTH / (img->x_len + 1);
+	scale_x = WINDOW_WIDTH / (img->x_len + 1);
 	scale_y = WINDOW_HEIGHT / (img->y_len + 1);
 	if (scale_x < scale_y)
 		img->scale = scale_x;

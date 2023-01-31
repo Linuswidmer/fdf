@@ -6,7 +6,7 @@
 /*   By: lwidmer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:05:14 by lwidmer           #+#    #+#             */
-/*   Updated: 2023/01/30 16:46:16 by lwidmer          ###   ########.fr       */
+/*   Updated: 2023/01/31 09:10:15 by lwidmer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,8 @@ int	main(int argc, char **argv)
 		if (fd > 0)
 		{
 			map = parse_map(fd, &num_lines, &line_len);
-			if (PROJECTION)
-			{
-				rotation_z(map, num_lines, line_len, 3.14 + 0.785);
-				rotation_x(map, num_lines, line_len, 3.14 + 0.955);
-			}
+			rotation_z(map, num_lines, line_len, 3.141592 + 0.785);
+			rotation_x(map, num_lines, line_len, 3.141592 + 0.955);
 			window(map, num_lines, line_len);
 			free_map_struct(map, num_lines);
 		}

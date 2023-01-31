@@ -6,7 +6,7 @@
 
 NAME = fdf
 
-FILENAMES = main parse_map parse_map_utils window events draw rotation map
+FILENAMES = main parse_map parse_map_utils window events events_utils draw rotation map
 
 SRCS_DIR = ./sources_fdf/
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILENAMES)))
